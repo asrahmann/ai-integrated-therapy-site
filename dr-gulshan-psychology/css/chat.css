@@ -66,15 +66,30 @@
     }
 
     #gumbo-chat-window {
-        width: 90%;
-        height: 70vh;
-        right: 5%;
-        bottom: 100px;
+        position: fixed; /* Fixed to viewport so it doesn't scroll off */
+        bottom: 0;
+        right: 0;
+        width: 100% !important;
+        height: 100% !important; /* Full screen experience */
+        max-height: 100dvh; /* Handle dynamic viewport heights on mobile browsers */
+        border-radius: 0;
+        z-index: 10000; /* Ensure it's on top of everything */
+        border: none;
+    }
+    
+    .chat-header {
+        padding: 15px 20px; /* Compact header */
+    }
+
+    #close-chat {
+        font-size: 2rem;
+        padding: 10px; /* Easier to tap */
     }
     
     #gumbo-chat-bubble {
         bottom: 20px;
         right: 20px;
+        z-index: 10001; /* Keep bubble visible if needed, or hide it when chat open */
     }
 }
 
