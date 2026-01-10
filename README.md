@@ -1,5 +1,7 @@
 # AI-Integrated Therapy Platform: Dr. Gulshan Psychology
 
+> **⚠️ DEMO NOTICE:** This entire website is a **demonstration project**. It is not an active medical practice, and no services are actually being offered. The content, including the AI chatbot ("Gumbo"), is for showcase purposes only to demonstrate technical web development and AI integration capabilities.
+
 A modern, high-performance, and context-aware professional website built for Dr. Gulshan Nandinee Salim, Psy.D. This project serves as a showcase for **AI-Augmented Development**, demonstrating how complex architectural and technical requirements can be orchestrated using modern AI tools.
 
 ## 🚀 Live Demo
