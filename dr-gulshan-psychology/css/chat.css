@@ -59,6 +59,25 @@
     to { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    #gumbo-cta-label {
+        display: none !important; /* Hide label on mobile to prevent overflow */
+    }
+
+    #gumbo-chat-window {
+        width: 90%;
+        height: 70vh;
+        right: 5%;
+        bottom: 100px;
+    }
+    
+    #gumbo-chat-bubble {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
 #gumbo-chat-bubble svg {
     width: 30px;
     height: 30px;
