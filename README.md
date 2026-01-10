@@ -33,5 +33,5 @@ My role in this project was that of the **Solutions Architect and Product Manage
 See the [INSTRUCTIONS.md](./INSTRUCTIONS.md) file for a step-by-step guide on how to set up your `.env` file and start the local server.
 
 ---
-**Developed by [Your Name/Asrahmann]**  
+**Developed by [Ahmedur Rahman/Asrahmann]**  
 *Showcasing the future of rapid, high-quality web development through AI collaboration.*
