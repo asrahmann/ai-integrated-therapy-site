@@ -5,7 +5,7 @@
 A modern, high-performance, and context-aware professional website built for Dr. Gulshan Nandinee Salim, Psy.D. This project serves as a showcase for **AI-Augmented Development**, demonstrating how complex architectural and technical requirements can be orchestrated using modern AI tools.
 
 ## 🚀 Live Demo
-**[Insert Your Deployment Link Here - e.g., Render or Vercel]**
+**https://ai-integrated-therapy-site.onrender.com/**
 
 ## 🧠 The "Gumbo" AI Assistant
 The standout feature of this platform is **Gumbo**, a custom-built, context-aware chatbot.
