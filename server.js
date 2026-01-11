@@ -2,8 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { OpenAI } = require('openai');
+const Sentry = require("@sentry/node");
+const { nodeProfilingIntegration } = require("@sentry/profiling-node");
 
 const app = express();
+
+// Initialize Sentry
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+        nodeProfilingIntegration(),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 1.0, 
+    // Set sampling rate for profiling - this is relative to tracesSampleRate
+    profilesSampleRate: 1.0,
+});
+
 app.use(cors());
 app.use(express.json());
 
@@ -14,6 +29,17 @@ app.use(express.static(path.join(__dirname, 'dr-gulshan-psychology')));
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
+
+// Pricing for gpt-3.5-turbo (approximate)
+const COST_PER_1K_INPUT = 0.0005;
+const COST_PER_1K_OUTPUT = 0.0015;
+
+const calculateCost = (usage) => {
+    if (!usage) return 0;
+    const inputCost = (usage.prompt_tokens / 1000) * COST_PER_1K_INPUT;
+    const outputCost = (usage.completion_tokens / 1000) * COST_PER_1K_OUTPUT;
+    return (inputCost + outputCost).toFixed(6);
+};
 
 // In-memory session store (In production, use Redis or a database)
 const sessions = {};
@@ -106,6 +132,10 @@ app.post('/api/chat', async (req, res) => {
 
     if (containsInjectionAttempts(cleanMessage)) {
         console.warn(`Blocked injection attempt in session ${sessionId}: ${cleanMessage}`);
+        
+        // ALERT: Send specific warning to Sentry (triggers email if configured)
+        Sentry.captureMessage(`INJECTION BLOCKED in session ${sessionId}: ${cleanMessage}`, "warning");
+
         // Return a standard refusal immediately - do not send to LLM
         return res.json({ reply: "I can only answer questions about Dr. Gulshan's psychology practice. Please ask about services, fees, or consultations." });
     }
@@ -143,6 +173,7 @@ app.post('/api/chat', async (req, res) => {
             console.log(`Memory compacted for session ${sessionId}`);
         } catch (error) {
             console.error("Error summarizing chat:", error);
+            Sentry.captureException(error);
         }
     }
 
@@ -157,16 +188,36 @@ app.post('/api/chat', async (req, res) => {
         });
 
         const reply = completion.choices[0].message.content;
+        const usage = completion.usage;
+        const cost = calculateCost(usage);
         
         // Add assistant reply to history
         session.messages.push({ role: "assistant", content: reply });
 
+        // Log Traffic & Cost (Visible in Render logs & Sentry Breadcrumbs)
+        console.log(`[CHAT SUCCESS] Session: ${sessionId} | Cost: $${cost} | Tokens: ${usage.total_tokens}`);
+        
+        Sentry.addBreadcrumb({
+            category: "usage",
+            message: `Chat Cost: $${cost}`,
+            level: "info",
+            data: { 
+                tokens: usage.total_tokens,
+                prompt: usage.prompt_tokens,
+                completion: usage.completion_tokens
+            }
+        });
+
         res.json({ reply });
     } catch (error) {
         console.error("OpenAI Error:", error);
+        Sentry.captureException(error);
         res.status(500).json({ error: "Something went wrong with Gumbo's brain." });
     }
 });
+
+// Sentry Error Handler (must be before listening)
+Sentry.setupExpressErrorHandler(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
