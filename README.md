@@ -14,6 +14,15 @@ The standout feature of this platform is **Gumbo**, a custom-built, context-awar
 - **Memory Management:** Features a "10-Turn Compaction" cycle where it summarizes long conversations to maintain context without exceeding token limits or losing focus.
 - **Streaming UI:** Implements a character-by-character typing animation for a premium, human-like interaction feel.
 
+## 🛡️ Security & Monitoring
+To ensure the safety and reliability of the AI assistant, we have implemented robust security measures:
+- **Hard Input Validation:** A pre-flight check strips all XML/HTML tags from user input to prevent tag injection attacks.
+- **Jailbreak Detection:** A "hard guardrail" system scans for malicious keywords (e.g., "ignore previous instructions", "act as") and blocks the request *before* it reaches the AI model.
+- **Sentry Integration:** Real-time monitoring tracks:
+  - **Security Events:** Immediate alerts for blocked injection attempts.
+  - **Usage Metrics:** Token consumption and cost tracking for every interaction.
+  - **Error Logging:** Remote capturing of server-side errors for rapid debugging.
+
 ## 🛠️ Tech Stack & Architecture
 - **Frontend:** Vanilla HTML5, CSS3, and Bootstrap 5. Chosen for extreme speed, SEO optimization, and long-term maintainability.
 - **Backend:** Node.js with Express. Acts as a secure bridge between the user and OpenAI, protecting API secrets.
