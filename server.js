@@ -200,7 +200,7 @@ app.post('/api/chat', async (req, res) => {
         // --- Sentry Metrics (For Dashboards) ---
         const costNumber = parseFloat(cost);
         // Track total cost (Sumable)
-        Sentry.metrics.increment("ai.cost", costNumber);
+        Sentry.metrics.count("ai.cost", costNumber);
         // Track token usage distributions (Avg, P95, etc.)
         Sentry.metrics.distribution("ai.tokens.total", usage.total_tokens);
         Sentry.metrics.distribution("ai.tokens.prompt", usage.prompt_tokens);
