@@ -196,6 +196,15 @@ app.post('/api/chat', async (req, res) => {
 
         // Log Traffic & Cost (Visible in Render logs & Sentry Breadcrumbs)
         console.log(`[CHAT SUCCESS] Session: ${sessionId} | Cost: $${cost} | Tokens: ${usage.total_tokens}`);
+
+        // --- Sentry Metrics (For Dashboards) ---
+        const costNumber = parseFloat(cost);
+        // Track total cost (Sumable)
+        Sentry.metrics.increment("ai.cost", costNumber);
+        // Track token usage distributions (Avg, P95, etc.)
+        Sentry.metrics.distribution("ai.tokens.total", usage.total_tokens);
+        Sentry.metrics.distribution("ai.tokens.prompt", usage.prompt_tokens);
+        Sentry.metrics.distribution("ai.tokens.completion", usage.completion_tokens);
         
         Sentry.addBreadcrumb({
             category: "usage",
