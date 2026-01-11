@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(wrapper);
 
     const bubble = document.getElementById('gumbo-chat-bubble');
-    const window = document.getElementById('gumbo-chat-window');
+    const chatWindow = document.getElementById('gumbo-chat-window');
     const closeBtn = document.getElementById('close-chat');
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     bubble.addEventListener('click', () => {
-        window.classList.toggle('active');
+        chatWindow.classList.toggle('active');
     });
 
     closeBtn.addEventListener('click', () => {
-        window.classList.remove('active');
+        chatWindow.classList.remove('active');
     });
 
     chatForm.addEventListener('submit', async (e) => {
@@ -62,8 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         typingIndicator.style.display = 'block';
         messageContainer.scrollTop = messageContainer.scrollHeight;
 
+        // Determine API URL based on environment (Live Server uses 5500/5501)
+        const isLocalDev = window.location.port === '5500' || window.location.port === '5501';
+        const API_URL = isLocalDev ? 'http://localhost:3000/api/chat' : '/api/chat';
+        
+        console.log(`[Gumbo Debug] Current port: ${window.location.port}, isLocalDev: ${isLocalDev}`);
+        console.log(`[Gumbo Debug] Fetching from: ${API_URL}`);
+
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text, sessionId })
