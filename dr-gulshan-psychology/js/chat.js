@@ -33,6 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chat-input');
     const messageContainer = document.getElementById('chat-messages');
     const typingIndicator = document.getElementById('typing-indicator');
+    const ctaLabel = document.getElementById('gumbo-cta-label');
+
+    // Make the CTA label vanish after 5 seconds
+    if (ctaLabel) {
+        setTimeout(() => {
+            ctaLabel.style.transition = 'opacity 1s ease';
+            ctaLabel.style.opacity = '0';
+            // Completely remove from DOM flow after fade
+            setTimeout(() => {
+                ctaLabel.style.display = 'none';
+            }, 1000);
+        }, 5000);
+    }
 
     // Generate or get unique session ID
     let sessionId = localStorage.getItem('gumbo_session_id');

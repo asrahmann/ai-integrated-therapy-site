@@ -7,6 +7,14 @@ A modern, high-performance, and context-aware professional website built for Dr.
 ## 🚀 Live Demo
 **https://ai-integrated-therapy-site.onrender.com/**
 
+## 📸 Visual Showcase
+<p align="center">
+  <img src="dr-gulshan-psychology/assets/images/main_page.jpg" alt="Main Landing Page" width="45%" />
+  &nbsp;
+  <img src="dr-gulshan-psychology/assets/images/gumbo_chat.jpg" alt="Gumbo AI Chat Interface" width="45%" />
+</p>
+<p align="center"><em>Left: The therapeutic "Wellness" landing page. Right: The custom "Gumbo" AI chat interface.</em></p>
+
 ## 🧠 The "Gumbo" AI Assistant
 The standout feature of this platform is **Gumbo**, a custom-built, context-aware chatbot.
 - **Context-Locked:** Gumbo is trained specifically on Dr. Gulshan’s practice, including her "Haunted House Therapy™" method, fees, and clinical philosophy.
