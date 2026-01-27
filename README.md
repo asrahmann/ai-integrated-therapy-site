@@ -31,7 +31,7 @@ To ensure the safety and reliability of the AI assistant, we have implemented ro
   - **Usage Metrics:** Token consumption and cost tracking for every interaction.
   - **Error Logging:** Remote capturing of server-side errors for rapid debugging.
 
-###  Observability & Metrics
+### Observability & Metrics
 
 #### 1. AI Financial Operations (FinOps)
 *Real-time tracking of exact AI spend per session and token distribution. This allows for immediate budget alerts if costs spike.*
@@ -45,7 +45,7 @@ To ensure the safety and reliability of the AI assistant, we have implemented ro
 *A unified operational view combining our custom cost/token metrics with Sentry's default health indicators (error rates and throughput) to monitor overall application stability.*
 ![Sentry General Dashboard](dr-gulshan-psychology/assets/images/sentry/General%20Dashboard.jpg)
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 - **Frontend:** Vanilla HTML5, CSS3, and Bootstrap 5. Chosen for extreme speed, SEO optimization, and long-term maintainability.
 - **Backend:** Node.js with Express. Acts as a secure bridge between the user and OpenAI, protecting API secrets.
 - **AI Engine:** OpenAI GPT-3.5 Turbo.
